@@ -1,6 +1,6 @@
-# DOS Attack Detection System
+# DOS-DETECTION
 
-The **DOS Attack Detection System** is a CLI-based Python project designed to identify and analyze malicious Denial-of-Service (DOS) attacks in real time. It monitors network traffic patterns, detects anomalies such as sudden spikes in requests, and blocks suspicious IPs using system firewalls. This tool is beginner-friendly and works on both Linux and Windows systems.
+The **DOS-DETECTION** is a CLI-based Python project designed to identify and analyze malicious Denial-of-Service (DOS) attacks in real time. It monitors network traffic patterns, detects anomalies such as sudden spikes in requests, and blocks suspicious IPs using system firewalls. This tool is beginner-friendly and works on both Linux and Windows systems.
 
 ---
 
