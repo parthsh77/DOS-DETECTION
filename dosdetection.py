@@ -3,12 +3,40 @@ from scapy.all import sniff, IP
 import pandas as pd
 from collections import defaultdict
 
-# Configuration
-THRESHOLD = 100  # Max requests per IP in a time window
-TIME_WINDOW = 10  # Time window in seconds
-BLOCKLIST = set()  # IPs to block
+banner = r"""
+        ______
+     .-'      `-.
+    /            \
+   |              |
+   |,  .-.  .-.  ,|
+   | )(_o/  \o_)( |
+   |/     /\     \|
+   (_     ^^     _)
+    \__|IIIIII|__/
+     | \IIIIII/ |
+     \          /
+      `--------`
 
-# Data storage
+██████╗  █████╗ ██████╗ ████████╗██╗  ██╗
+██╔══██╗██╔══██╗██╔══██╗╚══██╔══╝██║  ██║
+██████╔╝███████║██████╔╝   ██║   ███████║
+██╔═══╝ ██╔══██║██╔══██╗   ██║   ██╔══██║
+██║     ██║  ██║██║  ██║   ██║   ██║  ██║
+╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝
+                                         
+"""
+# Pipe the banner output to lolcat for colorized text
+os.system(f'echo "{banner}" | lolcat')
+
+print(banner)
+
+
+
+THRESHOLD = 100  
+TIME_WINDOW = 10  
+BLOCKLIST = set()  
+
+
 ip_request_count = defaultdict(int)
 start_time = time.time()
 
@@ -18,21 +46,21 @@ def detect_dos(packet):
     if IP in packet:
         ip_src = packet[IP].src
 
-        # Reset counts if time window has passed
+        
         if time.time() - start_time > TIME_WINDOW:
             ip_request_count.clear()
             start_time = time.time()
 
-        # Count requests per IP
+       
         ip_request_count[ip_src] += 1
 
-        # Check for threshold violation
+       
         if ip_request_count[ip_src] > THRESHOLD:
             if ip_src not in BLOCKLIST:
                 print(f"[!] DOS Detected from IP: {ip_src}")
                 BLOCKLIST.add(ip_src)
-                block_ip(ip_src)  # Block the IP
-                log_attack(ip_src)  # Log the attack
+                block_ip(ip_src)  
+                log_attack(ip_src)  
 
 def block_ip(ip):
     """Block the IP using system firewall."""
@@ -40,12 +68,12 @@ def block_ip(ip):
     system = platform.system()
 
     if system == "Linux":
-        # Use iptables to block IP
+        
         import os
         os.system(f"iptables -A INPUT -s {ip} -j DROP")
         print(f"[+] Blocked IP {ip} on Linux.")
     elif system == "Windows":
-        # Use Windows Firewall API to block IP
+       
         print(f"[+] Blocking IP {ip} on Windows is not implemented yet.")
     else:
         print(f"[-] Unsupported OS: {system}")
